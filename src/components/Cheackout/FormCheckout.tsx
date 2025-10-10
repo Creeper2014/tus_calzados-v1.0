@@ -186,7 +186,7 @@ export const FormCheckout = () => {
 						Resumen del pedido
 					</h3>
 					
-					<ItemsCheckout selectedShipping={selectedOption}/>
+					<ItemsCheckout selectedShipping={selectedOption ?? null}/>
 					<div className="flex justify-between text-lg font-bold">
 						<span>Total:</span>
 						<span>${finalAmount.toLocaleString()}</span>

@@ -17,7 +17,6 @@ export const ItemsCheckout = ({selectedShipping }: ItemsCheckoutProps) => {
 	const cartItems = useCartStore(state => state.items);
 	const totalAmount = useCartStore(state => state.totalAmount);
 
-	const shippingPrice = selectedShipping?.price ?? 0;
 
 
 	return (
