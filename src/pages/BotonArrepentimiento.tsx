@@ -44,9 +44,8 @@ export default function BotonArrepentimiento() {
 };
 
 const { error } = await supabase
-  .from<Database['public']['Tables']['arrepentimientos']['Insert']>("arrepentimientos")
-
-    .insert([insertData]);
+  .from("arrepentimientos")
+  .insert([insertData]);
 
   if (error) {
     console.error(error);
