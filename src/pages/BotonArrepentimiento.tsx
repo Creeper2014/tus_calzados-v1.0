@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { supabase } from "../supabase/client";
+import type { Database } from "../supabase/supabase";
 
+// 🔹 Usamos el mismo tipo que definiste
 type ArrepentimientoForm = {
   id?: number;
   nombre: string;
@@ -10,6 +12,7 @@ type ArrepentimientoForm = {
   alias: string;
   motivo?: string;
   created_at?: string;
+  estado?: string;
 };
 
 export default function BotonArrepentimiento() {
@@ -30,9 +33,20 @@ export default function BotonArrepentimiento() {
     setLoading(true);
     setErrorMsg("");
 
-  const { error } = await supabase
-    .from<ArrepentimientoForm>("arrepentimientos")
-    .insert([data as Partial<ArrepentimientoForm>]);
+  const insertData: Database['public']['Tables']['arrepentimientos']['Insert'] = {
+  nombre: data.nombre,
+  email: data.email,
+  pedido: data.pedido,
+  alias: data.alias,
+  motivo: data.motivo,
+  created_at: data.created_at,
+  // no ponemos estado porque no existe en la tabla
+};
+
+const { error } = await supabase
+  .from<Database['public']['Tables']['arrepentimientos']['Insert']>("arrepentimientos")
+
+    .insert([insertData]);
 
   if (error) {
     console.error(error);

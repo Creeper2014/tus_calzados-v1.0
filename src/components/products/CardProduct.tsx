@@ -5,6 +5,7 @@ import { toast } from 'react-hot-toast';
 import { useCartStore } from '../../store/cart.store';
 import { formatPrice } from '../../helpers';
 import { Tag } from '../shared/Tag';
+import type { VariantProduct } from '../../interfaces';
 
 
 interface Props {
