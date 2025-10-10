@@ -3,7 +3,7 @@ import { useCartStore } from "../store/cart.store";
 import { FormCheckout } from "../components/Cheackout/FormCheckout";
 import { ItemsCheckout } from "../components/Cheackout/ItemsCheckout";
 import { useUser } from "../hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "../supabase/client";
 import { Loader } from "../components/shared/Loader";
 
@@ -14,6 +14,16 @@ export const CheackoutPage = () => {
     const { isLoading } = useUser();
 
 	const navigate = useNavigate();
+
+	 // Estado para el shipping
+    const [selectedShipping, setSelectedShipping] = useState<{
+        id: string;
+        label: string;
+        price: number;
+        minAmount?: number;
+    } | null>(null);
+
+
 
 	useEffect(() => {
 		supabase.auth.onAuthStateChange(async (event, session) => {
@@ -78,7 +88,7 @@ export const CheackoutPage = () => {
                             >
                                 {/*elementos del carrito*/}
 
-                                <ItemsCheckout />
+                                <ItemsCheckout selectedShipping={selectedShipping}/>
                             </div>
                         </>
                     )
