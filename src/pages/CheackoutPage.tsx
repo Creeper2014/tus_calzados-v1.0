@@ -88,7 +88,10 @@ export const CheackoutPage = () => {
                             >
                                 {/*elementos del carrito*/}
 
-                                <ItemsCheckout selectedShipping={selectedShipping}/>
+                                <ItemsCheckout 
+								selectedShipping={selectedShipping}
+								setSelectedShipping={setSelectedShipping}
+								/>
                             </div>
                         </>
                     )

@@ -9,7 +9,8 @@ type ShippingOption = {
 };
 
 type ItemsCheckoutProps = {
-  selectedShipping: ShippingOption | null;
+	selectedShipping: ShippingOption | null;
+	setSelectedShipping?: (shipping: ShippingOption | null) => void; // opcional
 };
 
 export const ItemsCheckout = ({selectedShipping }: ItemsCheckoutProps) => {
