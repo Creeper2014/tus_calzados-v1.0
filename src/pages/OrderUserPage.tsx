@@ -3,6 +3,7 @@ import { useOrder } from '../hooks';
 import { Loader } from '../components/shared/Loader';
 import { IoChevronBack } from 'react-icons/io5';
 import { formatDateLong, formatPrice } from '../helpers';
+import { SubirComprobante } from './SubirComprobante';
 
 const tableHeaders = ['Producto', 'Cantidad', 'Total'];
 
@@ -79,20 +80,32 @@ export const OrderUserPage = () => {
 						))}
 					</tbody>
 				</table>
+				<div className="flex justify-between items-start mt-8">
+				{/* Subir comprobante */}
+				<div className="w-1/2">
+					<SubirComprobante
+					orderId={order.id}
+					userId={order.customer.id}
+					comprobantePath={order.comprobante_path}
+					status={order.status}
+					/>
+				</div>
 
-				<div className='flex flex-col gap-3 text-slate-600 text-sm self-end w-1/2'>
-					<div className='flex justify-between'>
-						<p>Subtotal</p>
-						<p>{formatPrice(order.totalAmount)}</p>
+				{/* Totales */}
+				<div className="flex flex-col gap-3 text-slate-600 text-sm w-1/3">
+					<div className="flex justify-between">
+					<p>Subtotal</p>
+					<p>{formatPrice(order.totalAmount)}</p>
 					</div>
-					<div className='flex justify-between'>
-						<p>Envío (Standard)</p>
-						<p>{formatPrice(0)}</p>
+					<div className="flex justify-between">
+					<p>Envío (Standard)</p>
+					<p>{formatPrice(0)}</p>
 					</div>
-					<div className='flex justify-between text-black font-semibold'>
-						<p>Total</p>
-						<p>{formatPrice(order.totalAmount)}</p>
+					<div className="flex justify-between text-black font-semibold">
+					<p>Total</p>
+					<p>{formatPrice(order.totalAmount)}</p>
 					</div>
+				</div>
 				</div>
 
 				<div className='flex flex-col gap-3'>

@@ -160,6 +160,7 @@ export type Database = {
           id: number
           status: string
           total_amount: number
+          comprobante_path: string | null    // <-- agregalo
         }
         Insert: {
           address_id: string
@@ -168,6 +169,7 @@ export type Database = {
           id?: number
           status?: string
           total_amount: number
+          comprobante_path?: string | null   // <-- opcional en insert
         }
         Update: {
           address_id?: string
@@ -176,6 +178,7 @@ export type Database = {
           id?: number
           status?: string
           total_amount?: number
+          comprobante_path?: string | null   // <-- opcional en update
         }
         Relationships: [
           {

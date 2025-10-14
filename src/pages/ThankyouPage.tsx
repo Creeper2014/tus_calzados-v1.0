@@ -70,8 +70,8 @@ export const ThankyouPage = () => {
 
 					<p className='text-sm'>
 						Una vez realizada la transferencia, comparte tu
-						comprobante a ventas@celularesbaratos.com para procesarla
-						y hacerte la entrega de tu dispositivo a domicilio.
+						comprobante a tuscalzadosok2025@gmail.com para procesarla
+						y hacerte la entrega de tu compra.
 					</p>
 				</div>
 

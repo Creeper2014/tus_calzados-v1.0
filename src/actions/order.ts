@@ -169,66 +169,72 @@ export const getOrdersByCustomerId = async () => {
 	return orders;
 };
 
+// ...existing code...
+
 export const getOrderById = async (orderId: number) => {
-	const { data, error: errorUser } = await supabase.auth.getUser();
+    const { data, error: errorUser } = await supabase.auth.getUser();
 
-	if (errorUser) {
-		console.log(errorUser);
-		throw new Error(errorUser.message);
-	}
+    if (errorUser) {
+        console.log(errorUser);
+        throw new Error(errorUser.message);
+    }
 
-	const { data: customer, error: customerError } = await supabase
-		.from('customers')
-		.select('id')
-		.eq('user_id', data.user.id)
-		.single();
+    const { data: customer, error: customerError } = await supabase
+        .from('customers')
+        .select('id')
+        .eq('user_id', data.user.id)
+        .single();
 
-	if (customerError) {
-		console.log(customerError);
-		throw new Error(customerError.message);
-	}
+    if (customerError) {
+        console.log(customerError);
+        throw new Error(customerError.message);
+    }
 
-	const customerId = customer.id;
+    const customerId = customer.id;
 
-	const { data: order, error } = await supabase
-		.from('orders')
-		.select('*, addresses(*), customers(full_name, email), order_items(quantity, price, variants(color_name, storage, products(name, images)))')
-		.eq('customer_id', customerId)
-		.eq('id', orderId)
-		.single();
+    const { data: order, error } = await supabase
+        .from('orders')
+        .select('*, addresses(*), customers(id, full_name, email), order_items(quantity, price, variants(color_name, storage, products(name, images))), comprobante_path')
+        .eq('customer_id', customerId)
+        .eq('id', orderId)
+        .single();
 
-	if (error) {
-		console.log(data, error);
-		throw new Error(error.message);
-	}
+    if (error) {
+        console.log(data, error);
+        throw new Error(error.message);
+    }
 
-	return {
-		customer: {
-			email: order?.customers?.email,
-			full_name: order.customers?.full_name,
-		},
-		totalAmount: order.total_amount,
-		status: order.status,
-		created_at: order.created_at,
-		address: {
-			addressLine1: order.addresses?.address_line1,
-			addressLine2: order.addresses?.address_line2,
-			city: order.addresses?.city,
-			state: order.addresses?.state,
-			postalCode: order.addresses?.postal_code,
-			country: order.addresses?.country,
-		},
-		orderItems: order.order_items.map(item => ({
-			quantity: item.quantity,
-			price: item.price,
-			color_name: item.variants?.color_name,
-			storage: item.variants?.storage,
-			productName: item.variants?.products?.name,
-			productImage: item.variants?.products?.images[0],
-		})),
-	};
+    return {
+        id: order.id,
+        customer: {
+            id: order.customers?.id ?? null,
+            email: order.customers?.email,
+            full_name: order.customers?.full_name,
+        },
+        totalAmount: order.total_amount,
+        status: order.status,
+        comprobante_path: order.comprobante_path ?? null,
+        created_at: order.created_at,
+        address: {
+            addressLine1: order.addresses?.address_line1,
+            addressLine2: order.addresses?.address_line2,
+            city: order.addresses?.city,
+            state: order.addresses?.state,
+            postalCode: order.addresses?.postal_code,
+            country: order.addresses?.country,
+        },
+        orderItems: order.order_items.map((item: any) => ({
+            quantity: item.quantity,
+            price: item.price,
+            color_name: item.variants?.color_name,
+            storage: item.variants?.storage,
+            productName: item.variants?.products?.name,
+            productImage: item.variants?.products?.images?.[0],
+        })),
+    };
 };
 
+// ...existing code...
 /* ********************************** */
 /*            ADMINISTRADOR           */
 /* ********************************** */
@@ -267,42 +273,43 @@ export const updateOrderStatus = async ({
 };
 
 export const getOrderByIdAdmin = async (id: number) => {
-	const { data: order, error } = await supabase
-		.from('orders')
-		.select(
-			'*, addresses(*), customers(full_name, email), order_items(quantity, price, variants(color_name, storage, products(name, images)))'
-		)
-		.eq('id', id)
-		.single();
+  const { data: order, error } = await supabase
+    .from("orders")
+    .select(
+      "*, addresses(*), customers(full_name, email), order_items(quantity, price, variants(color_name, storage, products(name, images)))"
+    )
+    .eq("id", id)
+    .single();
 
-	if (error) {
-		console.log(error);
-		throw new Error(error.message);
-	}
+  if (error) {
+    console.log(error);
+    throw new Error(error.message);
+  }
 
-	return {
-		customer: {
-			email: order?.customers?.email,
-			full_name: order.customers?.full_name,
-		},
-		totalAmount: order.total_amount,
-		status: order.status,
-		created_at: order.created_at,
-		address: {
-			addressLine1: order.addresses?.address_line1,
-			addressLine2: order.addresses?.address_line2,
-			city: order.addresses?.city,
-			state: order.addresses?.state,
-			postalCode: order.addresses?.postal_code,
-			country: order.addresses?.country,
-		},
-		orderItems: order.order_items.map(item => ({
-			quantity: item.quantity,
-			price: item.price,
-			color_name: item.variants?.color_name,
-			storage: item.variants?.storage,
-			productName: item.variants?.products?.name,
-			productImage: item.variants?.products?.images[0],
-		})),
-	};
+  return {
+    customer: {
+      email: order?.customers?.email,
+      full_name: order?.customers?.full_name,
+    },
+    totalAmount: order?.total_amount,
+    status: order?.status,
+    created_at: order?.created_at,
+    comprobante_path: order?.comprobante_path || null, // 👈 importante
+    address: {
+      addressLine1: order?.addresses?.address_line1,
+      addressLine2: order?.addresses?.address_line2,
+      city: order?.addresses?.city,
+      state: order?.addresses?.state,
+      postalCode: order?.addresses?.postal_code,
+      country: order?.addresses?.country,
+    },
+    orderItems: order?.order_items?.map((item) => ({
+		quantity: item.quantity, 
+		price: item.price, 
+		color_name: item.variants?.color_name, 
+		storage: item.variants?.storage, 
+		productName: item.variants?.products?.name, 
+		productImage: item.variants?.products?.images[0],
+      })) || [],
+  };
 };

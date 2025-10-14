@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useOrderAdmin } from '../../hooks';
 import { Loader } from '../../components/shared/Loader';
 import { formatPrice } from '../../helpers';
+import VerComprobanteAdmin from './VerComprobanteAdmin';
 
 const tableHeaders = ['Producto', 'Cantidad', 'Total'];
 
@@ -91,6 +92,11 @@ export const DashboardOrderPage = () => {
 						<p>{formatPrice(order.totalAmount)}</p>
 					</div>
 				</div>
+				{order.comprobante_path ? (
+				<VerComprobanteAdmin comprobantePath={order.comprobante_path} />
+				) : (
+				<p className="text-gray-500 italic">Sin comprobante</p>
+				)}
 
 				<div className='flex flex-col gap-3'>
 					<h2 className='text-lg font-bold'>Dirección</h2>

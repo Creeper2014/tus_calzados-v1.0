@@ -11,6 +11,7 @@ export * from "./OrderUserPage";
 export * from "./Privacidad";
 export * from "./Terminos";
 export * from "./BotonArrepentimiento";
+export * from "./SubirComprobante";
 
 // DASHBOARD PAGES
 export * from "./dashboard/DashboardProductsPage";
