@@ -65,7 +65,7 @@ export const FormCheckout = () => {
 				price: item.price,
 			})),
 			subtotal: totalAmount,
-			shippingMethod: selectedShipping, // 🔹 guardás el método de envío elegido
+			shippingMethod: selectedShipping ?? "free", // 🔹 guardás el método de envío elegido
 			shippingPrice,       // lo guardás por separado
       		totalAmount: finalAmount, // total con envío
 		};
