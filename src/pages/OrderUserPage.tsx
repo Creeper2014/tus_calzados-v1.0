@@ -14,6 +14,13 @@ export const OrderUserPage = () => {
 
 	const navigate = useNavigate();
 
+	// 🔹 Aquí definís los labels de envío
+	const shippingLabels: Record<string, string> = {
+		free: "Envío gratis",
+		home: "Domicilio",
+		pickup: "Retiro en sucursal",
+	};
+
 	if (isLoading || !order) return <Loader />;
 
 	return (
@@ -98,8 +105,9 @@ export const OrderUserPage = () => {
 					<p>{formatPrice(order.totalAmount)}</p>
 					</div>
 					<div className="flex justify-between">
-					<p>Envío (Standard)</p>
-					<p>{formatPrice(0)}</p>
+					<p>Metodo de envio: {shippingLabels[order.shippingMethod ?? "free"]}</p>
+					
+					<p>{formatPrice(order.shippingCost ?? 0)}</p>
 					</div>
 					<div className="flex justify-between text-black font-semibold">
 					<p>Total</p>

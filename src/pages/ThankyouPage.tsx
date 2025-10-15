@@ -15,6 +15,12 @@ export const ThankyouPage = () => {
 
 	const navigate = useNavigate();
 
+	const shippingLabels: Record<string, string> = {
+		free: "Envío gratis",
+		home: "Domicilio",
+		pickup: "Retiro en sucursal",
+	};
+
 	useEffect(() => {
 		supabase.auth.onAuthStateChange(async (event, session) => {
 			if (event === 'SIGNED_OUT' || !session) {
@@ -69,9 +75,10 @@ export const ThankyouPage = () => {
 					</div>
 
 					<p className='text-sm'>
-						Una vez realizada la transferencia, comparte tu
-						comprobante a tuscalzadosok2025@gmail.com para procesarla
-						y hacerte la entrega de tu compra.
+						Una vez realizada la transferencia, debes de subir el comprobante de la transferencia
+						desde tu perfil e ingresando al pedido correspondiente de dicha transferencia, o bien
+						comparte tu comprobante a tuscalzadosok2025@gmail.com agregando los datos de tu cuenta
+						en nuestra pagina para procesarla y hacerte la entrega de tu compra.
 					</p>
 				</div>
 
@@ -151,7 +158,7 @@ export const ThankyouPage = () => {
 
 						<div className='flex flex-col text-sm'>
 							<p className='font-semibold'>Método de envío</p>
-							<p>Standard</p>
+							<p>{shippingLabels[data.shippingMethod ?? "free"]}</p>
 						</div>
 					</div>
 				</div>

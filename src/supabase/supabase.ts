@@ -161,6 +161,8 @@ export type Database = {
           status: string
           total_amount: number
           comprobante_path: string | null    // <-- agregalo
+          shipping_method: string | null; // <-- nuevo
+          shipping_cost: number | null;   // <-- nuevo
         }
         Insert: {
           address_id: string
@@ -170,6 +172,8 @@ export type Database = {
           status?: string
           total_amount: number
           comprobante_path?: string | null   // <-- opcional en insert
+          shipping_method?: string; // <-- nuevo opcional
+          shipping_cost?: number;   // <-- nuevo opcional
         }
         Update: {
           address_id?: string
@@ -179,6 +183,8 @@ export type Database = {
           status?: string
           total_amount?: number
           comprobante_path?: string | null   // <-- opcional en update
+          shipping_method?: string; // <-- nuevo opcional
+          shipping_cost?: number;   // <-- nuevo opcional
         }
         Relationships: [
           {

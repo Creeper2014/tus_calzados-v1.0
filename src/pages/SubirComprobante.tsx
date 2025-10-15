@@ -18,39 +18,45 @@ export const SubirComprobante = ({
   const [uploading, setUploading] = useState(false);
 
   const handleUpload = async () => {
-    if (!file) return alert("Seleccioná un archivo");
+  if (!file) return alert("Seleccioná un archivo");
 
-    setUploading(true);
+  setUploading(true);
 
-    try {
-      const path = `user-${userId}/order-${orderId}/${Date.now()}-${file.name}`;
+  try {
+    // 🔹 Limpiar el nombre del archivo para evitar problemas con caracteres raros
+    const safeFileName = file.name
+      .normalize("NFD")                // separa acentos
+      .replace(/[\u0300-\u036f]/g, "") // elimina diacríticos
+      .replace(/[^a-zA-Z0-9.-]/g, "_"); // reemplaza todo lo demás por "_"
 
-      // Subir archivo al bucket privado
-      const { error: uploadError } = await supabase
-        .storage.from("comprobantes")
-        .upload(path, file, { upsert: true });
+    // 🔹 Generar path único para el bucket
+    const path = `user-${userId}/order-${orderId}/${Date.now()}-${safeFileName}`;
 
-      if (uploadError) throw uploadError;
+    // 🔹 Subir archivo al bucket privado
+    const { error: uploadError } = await supabase
+      .storage
+      .from("comprobantes")
+      .upload(path, file, { upsert: true });
 
-      // Guardar la ruta en la tabla orders
-      const { error: dbError } = await supabase
-        .from("orders")
-        .update({ comprobante_path: path })
-        .eq("id", orderId);
+    if (uploadError) throw uploadError;
 
-      if (dbError) throw dbError;
+    // 🔹 Guardar la ruta en la tabla orders
+    const { error: dbError } = await supabase
+      .from("orders")
+      .update({ comprobante_path: path })
+      .eq("id", orderId);
 
-      alert("Comprobante subido correctamente ✅");
-      window.location.reload(); // recargar para mostrar el comprobante
-    } catch (err) {
-      console.error(err);
-      alert("Error al subir el comprobante");
-    } finally {
-      setUploading(false);
-    }
-  };
+    if (dbError) throw dbError;
 
-  
+    alert("Comprobante subido correctamente ✅");
+    window.location.reload();
+  } catch (err) {
+    console.error(err);
+    alert("Error al subir el comprobante");
+  } finally {
+    setUploading(false);
+  }
+};
 
   const handleVerComprobante = async () => {
     if (!comprobantePath) return;

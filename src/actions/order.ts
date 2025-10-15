@@ -73,6 +73,8 @@ export const createOrder = async (order: OrderInput) => {
 			address_id: addressData.id,
 			total_amount: order.totalAmount,
 			status: 'Pending',
+			shipping_method: order.shippingMethod, // 👈 agregado
+        	shipping_cost: order.shippingPrice,    // 👈 agregado
 		})
 		.select()
 		.single();
@@ -213,6 +215,8 @@ export const getOrderById = async (orderId: number) => {
         },
         totalAmount: order.total_amount,
         status: order.status,
+		shippingMethod: order.shipping_method, // 👈 agregado
+    	shippingCost: order.shipping_cost,     // 👈 agregado
         comprobante_path: order.comprobante_path ?? null,
         created_at: order.created_at,
         address: {

@@ -13,6 +13,9 @@ export interface OrderInput {
 		price: number;
 	}[];
 	totalAmount: number;
+	// 🔹 Agregamos envío
+  	shippingMethod: string;
+  	shippingPrice: number;
 }
 
 export interface OrderItemSingle {
