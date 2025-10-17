@@ -104,7 +104,7 @@ export const DashboardOrderPage = () => {
 					<div className='border border-stone-300 p-5 flex flex-col gap-5'>
 						<div className='space-y-1'>
 							<h3 className='font-medium'>Cliente:</h3>
-							<p>{order.customer.full_name}</p>
+							<p>{order.customer.full_name} / {order.customer.email}</p>
 						</div>
 
 						<div className='flex flex-col gap-1 text-sm'>
