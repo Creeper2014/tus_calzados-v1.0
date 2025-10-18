@@ -14,11 +14,11 @@ export const Banner = () => {
             {/* CONTENIDO del BANNER */}
             <div className="relative z-10 flex flex-col items-center justify-center py-20 px-4 text-center lg:py-40 lg:px-8">
                 <h1 className="text-4xl font-bold mb-4 lg:text-6xl">
-                    Las mejores indumentarias para vos
+                    La mejor indumentaria para vos
                 </h1>
 
                 <p className="text-lg mb-8 lg:text-2xl">
-                    Descubrí nuestra colección de calzados y ropas.
+                    Descubrí nuestra colección de prendas y calzados.
                 </p>
 
                 <Link
