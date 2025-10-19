@@ -39,7 +39,6 @@ export default function BotonArrepentimiento() {
   pedido: data.pedido,
   alias: data.alias,
   motivo: data.motivo,
-  created_at: data.created_at,
   // no ponemos estado porque no existe en la tabla
 };
 

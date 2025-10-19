@@ -11,7 +11,7 @@ export const FeatureGrid = () => {
 
                 <div className="slate-y-1">
                     <p className="font semibolt">Envíos gratis</p>
-                    <p className="text-sm">En todos nuestros productos selecionados</p>
+                    <p className="text-sm">Apartir de $50 mil pesos</p>
                 </div>
             </div>
             
